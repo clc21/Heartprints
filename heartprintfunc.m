@@ -1,5 +1,4 @@
-%version 21/1 -- path to save fig is set to sofia's folder
-%some records have white spaces -- fix!!
+%version 29/1 -- path to save fig is set to sofia's folder
 
 function heartPrints=heartprintfunc(filename,N0,N)
     [~,config]=wfdbloadlib;
@@ -54,6 +53,9 @@ function heartPrints=heartprintfunc(filename,N0,N)
     end
     
     %Heartprint initialising
+    nn_outlier=isoutlier(sinus_intervals,'mean');
+    sinus_intervals(nn_outlier)=0;
+
     hist_VV=histogram(ventricular_intervals,length(ventricular_intervals),'Visible', 'off');
     vv_width=hist_VV.BinWidth;
     nn_width=vv_width;
@@ -101,7 +103,6 @@ function heartPrints=heartprintfunc(filename,N0,N)
         rec_length='6 hours';
     end 
 
-    %Omit outliers 
 
     %Plot heartprints
     heartPrints=figure(1);
