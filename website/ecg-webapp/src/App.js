@@ -1,13 +1,13 @@
-import logo from './logo.svg';
 import './App.css';
 import { Button } from 'antd';
+import LayoutApp from './layout';
 
 function App() {
   return (
     <div className="App">
-      <header className="App-header">
-        <Button type="primary">button</Button>
-      </header>
+      <div>
+      <LayoutApp/>
+      </div>
     </div>
   );
 }
