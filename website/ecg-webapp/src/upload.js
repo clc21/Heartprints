@@ -1,6 +1,8 @@
 import React from 'react';
 import { InboxOutlined } from '@ant-design/icons';
 import { message, Upload } from 'antd';
+import './sidebar.css';
+
 const { Dragger } = Upload;
 const props = {
   name: 'file',
@@ -22,9 +24,10 @@ const props = {
   },
 };
 const UploadApp = () => (
-  <Dragger {...props}>
+    <div style={{height:'50%', padding: '10px'}}>
+  <Dragger {...props} >
     <p className="ant-upload-drag-icon">
-      <InboxOutlined />
+      <InboxOutlined style={{ color: '#06a598' }}/>
     </p>
     <p className="ant-upload-text">Click or drag file to this area to upload</p>
     <p className="ant-upload-hint">
@@ -32,5 +35,6 @@ const UploadApp = () => (
       banned files.
     </p>
   </Dragger>
+  </div>
 );
 export default UploadApp;

@@ -1,10 +1,10 @@
 import './App.css';
-import LayoutApp from './layout';
+import SidebarApp from './sidebar';
 
 function App() {
   return (
     <div className="App">
-      <LayoutApp/>
+      <SidebarApp/>
     </div>
   );
 }
