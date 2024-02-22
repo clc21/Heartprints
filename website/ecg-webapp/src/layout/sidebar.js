@@ -1,10 +1,10 @@
 import React from 'react';
 import { UploadOutlined, UserOutlined, VideoCameraOutlined , DownloadOutlined} from '@ant-design/icons';
 import { Layout, Menu, Row, theme, Button } from 'antd';
-import UploadApp from './upload';
+import UploadApp from '../upload';
 import './App.css'
 import './sidebar.css'
-import ImageApp from './image';
+import ImageApp from '../image';
 const { Header, Content, Footer, Sider } = Layout;
 const items = [
     {
