@@ -1,7 +1,7 @@
 import React from 'react';
 import { InboxOutlined } from '@ant-design/icons';
 import { message, Upload } from 'antd';
-import './sidebar.css';
+import '../sidebar.css';
 
 const { Dragger } = Upload;
 const props = {

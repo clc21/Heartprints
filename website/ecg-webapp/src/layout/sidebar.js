@@ -1,11 +1,12 @@
 import React from 'react';
 import { UploadOutlined, UserOutlined, VideoCameraOutlined , DownloadOutlined} from '@ant-design/icons';
 import { Layout, Menu, Row, theme, Button } from 'antd';
-import UploadApp from '../upload';
-import './App.css'
+import UploadApp from './content/upload';
+import '../App/App.css'
 import './sidebar.css'
-import ImageApp from '../image';
-const { Header, Content, Footer, Sider } = Layout;
+import ImageApp from './content/image';
+const { Content, Sider } = Layout;
+const imageUrl = "https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png"
 const items = [
     {
       key: '1',
@@ -25,6 +26,23 @@ const SidebarApp = () => {
   const {
     token: { colorBgContainer, borderRadiusLG },
   } = theme.useToken();
+  const handleDownload = async () => {
+    try {
+      const response = await fetch(imageUrl);
+      if (!response.ok) throw new Error('Network response was not ok');
+      const blob = await response.blob();
+      const downloadUrl = window.URL.createObjectURL(blob);
+      const link = document.createElement('a');
+      link.href = downloadUrl;
+      link.setAttribute('download', 'downloadedImage.png'); // Set the desired file name here
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+      window.URL.revokeObjectURL(downloadUrl);
+    } catch (error) {
+      console.error('Download failed:', error);
+    }
+  };
   return (
     <Layout>
       <Sider
@@ -65,9 +83,9 @@ const SidebarApp = () => {
             <Button style={{borderRadius: '10px', backgroundColor:'#058d82',color: 'white', width: '97%'}}>Upload</Button>
             </div>
             <div style={{width: '50%', display: 'flex', flexDirection:'column', justifyContent: 'center', alignItems: 'center'}}>
-            <ImageApp/>
+            <ImageApp imageUrl={imageUrl}/>
             <Button style={{ borderRadius: '10px', backgroundColor: '#058d82', color: 'white', margin: '10px' }}
-            icon={<DownloadOutlined style={{ color: 'white' }} />}
+            onClick={handleDownload} icon={<DownloadOutlined style={{ color: 'white' }}/>}
 />
 
             </div>

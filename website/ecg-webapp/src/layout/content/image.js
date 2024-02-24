@@ -1,9 +1,10 @@
 import React from 'react';
 import { Image } from 'antd';
-const ImageApp = () => (
+
+const ImageApp = ({ imageUrl }) => (
   <Image
     width={310}
-    src="https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png"
+    src={imageUrl}
   />
 );
 export default ImageApp;
