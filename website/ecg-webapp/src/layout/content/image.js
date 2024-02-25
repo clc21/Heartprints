@@ -3,7 +3,7 @@ import { Image } from 'antd';
 
 const ImageApp = ({ imageUrl }) => (
   <Image
-    width={310}
+    width={'100%'}
     src={imageUrl}
   />
 );

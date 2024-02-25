@@ -6,7 +6,7 @@ import '../App/App.css'
 import './sidebar.css'
 import ImageApp from './content/image';
 const { Content, Sider } = Layout;
-const imageUrl = "https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png"
+const imageUrl = process.env.PUBLIC_URL + "../../assets/heartprint.png"
 const items = [
     {
       key: '1',
@@ -68,6 +68,8 @@ const SidebarApp = () => {
             margin: '24px 16px 0',
           }}
         >
+          
+
           <div
             style={{
               padding: 24,
@@ -79,6 +81,7 @@ const SidebarApp = () => {
             }}
           >
             <div style={{width: '50%', display: 'flex', flexDirection:'column', justifyContent: 'center', alignItems: 'center' }}>
+            {/* <h1 style={{color: 'black'}}>Welcome to ECG Pro</h1> */}
             <UploadApp/>
             <Button style={{borderRadius: '10px', backgroundColor:'#058d82',color: 'white', width: '97%'}}>Upload</Button>
             </div>
