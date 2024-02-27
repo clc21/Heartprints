@@ -1,6 +1,6 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { UploadOutlined, UserOutlined, VideoCameraOutlined , DownloadOutlined} from '@ant-design/icons';
-import { Layout, Menu, Row, theme, Button } from 'antd';
+import { Layout, Menu, Row, theme, Button, message } from 'antd';
 import UploadApp from './content/upload';
 import '../App/App.css'
 import './sidebar.css'
@@ -14,18 +14,28 @@ const items = [
     },
     {
       key: '2',
-      label: 'Processing'
+      label: 'About'
     },
     {
       key: '3',
-      label:'Export'
+      label:'Help'
     }
   
   ]
+
 const SidebarApp = () => {
+  const [inputFile, setInputFile] = useState(null);
+  const [outputFile, setOutputFile] = useState(null);
+  
+  useEffect(() => {
+    console.log("FILE CHANGED:", inputFile);
+  }, [inputFile]);
+
+  
   const {
     token: { colorBgContainer, borderRadiusLG },
   } = theme.useToken();
+
   const handleDownload = async () => {
     try {
       const response = await fetch(imageUrl);
@@ -43,6 +53,21 @@ const SidebarApp = () => {
       console.error('Download failed:', error);
     }
   };
+
+  const handleFileUpload = () => {
+    if (!inputFile) {
+      message.error("Please select a file to upload.");
+      return;
+    }
+
+    message.success("Uploading file to server for processing.");
+
+    // TODO: for now, we set the output file to the input file.
+    // Later, this should await the result of our remote processing.
+    setOutputFile(inputFile);
+  }
+
+
   return (
     <Layout>
       <Sider
@@ -82,11 +107,22 @@ const SidebarApp = () => {
           >
             <div style={{width: '50%', display: 'flex', flexDirection:'column', justifyContent: 'center', alignItems: 'center' }}>
             {/* <h1 style={{color: 'black'}}>Welcome to ECG Pro</h1> */}
-            <UploadApp/>
-            <Button style={{borderRadius: '10px', backgroundColor:'#058d82',color: 'white', width: '97%'}}>Upload</Button>
+            <UploadApp updateFile={f => setInputFile(f)} removeFile={() => setInputFile(null)}/>
+            <Button
+              style={{
+                top: '5%',
+                borderRadius: '10px',
+                backgroundColor:'#058d82',
+                color: 'white',
+                width: '97%'
+              }}
+              onClick={handleFileUpload}
+            >
+              Upload
+            </Button>
             </div>
             <div style={{width: '50%', display: 'flex', flexDirection:'column', justifyContent: 'center', alignItems: 'center'}}>
-            <ImageApp imageUrl={imageUrl}/>
+            <ImageApp imageUrl={outputFile ? URL.createObjectURL(outputFile) : null}/>
             <Button style={{ borderRadius: '10px', backgroundColor: '#058d82', color: 'white', margin: '10px' }}
             onClick={handleDownload} icon={<DownloadOutlined style={{ color: 'white' }}/>}
 />
