@@ -64,7 +64,7 @@ const SidebarApp = () => {
 
     // TODO: for now, we set the output file to the input file.
     // Later, this should await the result of our remote processing.
-    setOutputFile(inputFile);
+    setOutputFile('../../assets/heartprint.png');
   }
 
 
@@ -122,7 +122,7 @@ const SidebarApp = () => {
             </Button>
             </div>
             <div style={{width: '50%', display: 'flex', flexDirection:'column', justifyContent: 'center', alignItems: 'center'}}>
-            <ImageApp imageUrl={outputFile ? URL.createObjectURL(outputFile) : null}/>
+            <ImageApp imageUrl={outputFile ? outputFile : null}/>
             <Button style={{ borderRadius: '10px', backgroundColor: '#058d82', color: 'white', margin: '10px' }}
             onClick={handleDownload} icon={<DownloadOutlined style={{ color: 'white' }}/>}
 />
