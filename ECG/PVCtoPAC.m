@@ -74,10 +74,65 @@ clc;clear;close all;
             
     end
 
-    
-    
+ %% P wave detection
+ % Storing
 
+ % To store max P peak values
+ pPeaksMax = [];
+ % To store min P peak values 
+ pPeaksMin = [];
+ % To store locations of max P peaks
+ pLocsMax = [];
+ % To store locations of min P peaks
+ pLocsMin = [];
+ % Threshold
+ threshold = #######;
 
+ 
+ for i = 1:length(rlocs)
+    if rlocs(i) > ###### % Ensuring there's enough signal before the R peak for analysis
+        searchWindow = max(1, rlocs(i)-#####):rlocs(i); % 200ms window before the R peak
+        % Finding the highest point of the P wave
+        [pPeakMax, pLocMax] = findpeaks(filt(searchWindow), 'NPeaks', 1, 'SortStr', 'descend');
+        % Finding the lowest point of the P wave by inverting the signal
+        [pPeakMin, pLocMin] = findpeaks(-filt(searchWindow), 'NPeaks', 1, 'SortStr', 'descend');
+        
+        if ~isempty(pPeakMax)
+            pPeaksMax = [pPeaksMax, pPeakMax];
+            pLocsMax = [pLocsMax, searchWindow(1) + pLocMax - 1];
+        end
+        if ~isempty(pPeakMin)
+            pPeaksMin = [pPeaksMin, -pPeakMin]; % Inverting back to original signal's value
+            pLocsMin = [pLocsMin, searchWindow(1) + pLocMin - 1]; 
+        end
+    end
+end
+
+pacBooleans = zeros(1, length(pLocsMax)); % Initialize PAC Booleans to 0
+
+for i = 1:length(pLocsMax)
+    pPeak = pPeaksMax(i);
+    pLoc = pLocsMax(i);
+    
+    % Assuming you have a way to identify the two lowest points around each P peak
+    % Let's say pLocsMinBefore and pLocsMinAfter are their locations
+    pLocMinBefore = ...; % Location of the first lowest point before the P peak
+    pLocMinAfter = ...; % Location of the second lowest point after the P peak
+
+    pLocMinBefore = findPreviousMinPoint(filt, pLoc);
+    pLocMinAfter = findNextMinPoint(filt, pLoc);
+    
+    % Calculate gradients
+    gradientBefore = (pPeak - filt(pLocMinBefore)) / (pLoc - pLocMinBefore);
+    gradientAfter = (pPeak - filt(pLocMinAfter)) / (pLocMinAfter - pLoc);
+    
+    % Compare gradients and assign boolean for PAC
+    if abs(gradientBefore - gradientAfter) > threshold
+        pacBooleans(i) = 1; % Mark as PAC
+    else
+        pacBooleans(i) = 0; % Not PAC
+    end
+end
 
     
     
